@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace _04_Change_Calculator
@@ -109,12 +110,12 @@ namespace _04_Change_Calculator
             return sb.ToString();
         }
 
-        public static void WriteToConsole<T>(List<string> collection)
+        public static void WriteToConsole<T>(IList<T> collection)
         {
             WriteToConsole<T>(collection, "\t");
         }
 
-        public static void WriteToConsole<T>(List<string> collection, string delimiter)
+        public static void WriteToConsole<T>(IList<T> collection, string delimiter)
         {
             int count = collection.Count();
             for (int i = 0; i < count; ++i)
@@ -129,7 +130,99 @@ namespace _04_Change_Calculator
 
             return myString;
         }
+        public static decimal ReadDecimal(string message, bool positiveNumber = false, bool acceptZero = true)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine(message);
 
+                    string input = Console.ReadLine();
+
+                    decimal returnValue = decimal.Parse(input);
+
+                    if (positiveNumber == true && returnValue < 0)
+                    {
+                        Console.WriteLine("Please enter a positive number");
+
+                        continue;
+                    }
+                    if (acceptZero == false && returnValue == 0)
+                    {
+                        Console.WriteLine("Please enter a number other than 0");
+
+                        continue;
+                    }
+
+                    return returnValue;
+                }
+                catch (ArgumentNullException e)
+                {
+                    Console.WriteLine("Please enter a value");
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Please enter a numerical value");
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine("Please enter a reasonably sized number");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("There was an error reading this decimal");
+                }
+            }
+        }
+
+        public static decimal ReadCurrency(string message, bool positiveNumber = false, bool acceptZero = true)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine(message);
+                    Console.Write("$");
+
+                    string input = Console.ReadLine();
+
+                    decimal returnValue = decimal.Parse(input);
+
+                    if (positiveNumber == true && returnValue < 0)
+                    {
+                        Console.WriteLine("---------------- \n \n");
+                        Console.WriteLine("Please enter a positive number");
+
+                        continue;
+                    }
+                    if (acceptZero == false && returnValue == 0)
+                    {
+                        Console.WriteLine("Please enter a number other than 0");
+
+                        continue;
+                    }
+
+                    return returnValue;
+                }
+                catch (ArgumentNullException e)
+                {
+                    Console.WriteLine("Please enter a value");
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Please enter a numerical value");
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine("Please enter a reasonably sized number");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("There was an error reading this decimal");
+                }
+            }
+        }
 
 
     }//End class
