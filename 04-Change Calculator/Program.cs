@@ -14,7 +14,10 @@ namespace _04_Change_Calculator
         static decimal NumOf50s, NumOf20s, NumOf10s, NumOf5s, NumOf2s, NumOf1s, 
             NumOfQuarters, NumOfDimes, NumOfNickels, NumOfPennies, moneyAdded;
 
-        static decimal itemCost, givenAmount, sumOfItemCost, sumOfCutomerMoney; 
+        static decimal itemCost, givenAmount, sumOfItemCost, sumOfCutomerMoney;
+
+        static int Itemcounter = 1;
+
 
         static List<decimal> ItemPriceList = new List<decimal>()
         { };
@@ -27,10 +30,9 @@ namespace _04_Change_Calculator
 
         static void AddLastTransaction(string price)
         {
-            int counter = 1;
 
-            Transactions.Add(counter + "). " +price);
-            counter++;
+            Transactions.Add(Itemcounter + "). " +price);
+            Itemcounter++;
 
         }
 
@@ -47,7 +49,7 @@ namespace _04_Change_Calculator
                 Console.WriteLine(o);
             }
 
-
+            ShowCashRegisaterAmount();
 
             Console.WriteLine(" \n \n You have sold : {0} Items \n \n ", items.Count);
         
@@ -61,7 +63,7 @@ namespace _04_Change_Calculator
         public static void AddTransactionPrompt()
         {
             Console.WriteLine(Line);
-            Console.WriteLine("Would you like to add another Transaction? (yes/no)");
+            Console.WriteLine("Would you like to add another Item? (yes/no)");
             string input = Console.ReadLine().ToLower();
 
             switch (input)
@@ -71,9 +73,7 @@ namespace _04_Change_Calculator
                     getInput();
                     break;
                 case "no":
-                    Console.WriteLine("No further transactions will be added, press enter to collect customers money.");
-                    Console.ReadLine();
-                    Console.Clear();
+                    
                     break;
                 default:
                     AddTransactionPrompt();
@@ -167,7 +167,7 @@ namespace _04_Change_Calculator
             string userInput;
             Console.Clear();
             Console.WriteLine(Line);
-            Console.WriteLine("Would you like to proceed with another transaction? (yes/quit) \n \n or \n \n  type print to print your transactions to screen");
+            Console.WriteLine("Would you like to proceed with another transaction? (yes/quit) \n \n or \n \n  type print to print your items sold to screen");
             userInput = Console.ReadLine();
             userInput = userInput.ToLower();
             userInput = JeffToolBox.RemoveSpecialCharacters(userInput);
@@ -343,9 +343,6 @@ namespace _04_Change_Calculator
         {
             Console.WriteLine(Line);
             Console.WriteLine("Welcome to Cash Register 1.0");
-            Console.WriteLine(Line);
-            Console.WriteLine("Future Inprovements: \n \n Multiple Item Transaction Feature  || Coming Soon");
-            Console.WriteLine("Currently enter 1 item per transaction.");
             Console.WriteLine(Line);
             Console.WriteLine("Press Enter to Begin");
             Console.ReadLine();
