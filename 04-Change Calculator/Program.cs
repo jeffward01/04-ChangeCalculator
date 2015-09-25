@@ -14,7 +14,10 @@ namespace _04_Change_Calculator
         static decimal NumOf50s, NumOf20s, NumOf10s, NumOf5s, NumOf2s, NumOf1s, 
             NumOfQuarters, NumOfDimes, NumOfNickels, NumOfPennies, moneyAdded;
 
-        static decimal itemCost, givenAmount;
+        static decimal itemCost, givenAmount, sumOfItemCost, sumOfCutomerMoney; 
+
+        static List<decimal> ItemPriceList = new List<decimal>()
+        { };
 
         static List<string> Transactions = new List<string>()
         {
@@ -55,20 +58,72 @@ namespace _04_Change_Calculator
 
         }
 
+        public static void AddTransactionPrompt()
+        {
+            Console.WriteLine(Line);
+            Console.WriteLine("Would you like to add another Transaction? (yes/no)");
+            string input = Console.ReadLine().ToLower();
+
+            switch (input)
+            {
+                case "yes":
+                    Console.Clear();
+                    getInput();
+                    break;
+                case "no":
+                    Console.WriteLine("No further transactions will be added, press enter to collect customers money.");
+                    Console.ReadLine();
+                    Console.Clear();
+                    break;
+                default:
+                    AddTransactionPrompt();
+                    break;
+            }
+
+
+        }
+
         static void getInput()
         {
-
+            int count = Transactions.Count;
             Console.WriteLine(Line);
 
             string RegisterTotal = TotalRegisterCash.ToString("C");
-            Console.WriteLine("You Currently have : {0} in your register", RegisterTotal);
+            Console.WriteLine("You Currently have : {0} in your register \n ", RegisterTotal);
+
+            
+            Console.WriteLine("Currently {0} items have been rung up", count);
+            string currentBill = sumOfItemCost.ToString("C");
+            Console.WriteLine("Current bill is {0}",currentBill);
 
             itemCost = JeffToolBox.ReadCurrency("Enter the item cost", true, false);
 
 
-            givenAmount = JeffToolBox.ReadCurrency("\n \n Mow much $$ has the customer given you?", true, false);
+            
+            sumOfItemCost = sumOfItemCost + itemCost;
+            ItemPriceList.Add(itemCost);
+
+            string itemSold = itemCost.ToString("C");
+
+            AddLastTransaction(itemSold);
+
+      
+
+            AddTransactionPrompt();
 
             
+
+        }
+       public static void getMoney()
+        {
+
+
+            string totalDue = sumOfItemCost.ToString("C");
+            int count = Transactions.Count;
+
+            givenAmount = JeffToolBox.ReadCurrency("\n \n The customer wishes to purchase " + count + " items, which totals " + totalDue + " \n \n Mow much $$ has the customer given you?", true, false);
+
+            sumOfCutomerMoney = sumOfCutomerMoney + givenAmount;
 
             if (givenAmount >= Decimal.MaxValue || givenAmount <= Decimal.MinValue)
 
@@ -81,7 +136,8 @@ namespace _04_Change_Calculator
                 Console.Clear();
                 getInput();
 
-            } else if (itemCost >= Decimal.MaxValue || itemCost <= Decimal.MinValue)
+            }
+            else if (itemCost >= Decimal.MaxValue || itemCost <= Decimal.MinValue)
             {
                 Console.Clear();
                 Console.WriteLine(Line);
@@ -92,9 +148,6 @@ namespace _04_Change_Calculator
                 getInput();
 
             }
-
-
-
         }
 
         static void RemoveLastTransaction(List<string> myList)
@@ -193,7 +246,7 @@ namespace _04_Change_Calculator
             string yourPenneis = NumOfPennies.ToString("C");
 
             Console.WriteLine(Line);
-
+            int count = Transactions.Count();
             string amountPaid = givenAmount.ToString("C");
             string my2nd = itemCost.ToString("C");
 
@@ -211,14 +264,14 @@ namespace _04_Change_Calculator
             Console.WriteLine("# of Pennies : {0}", NumOfPennies);
             Console.WriteLine(Line);
             Console.WriteLine("The total change you gave the customer is: " + customersChange);
-            Console.WriteLine("\n \n The Customer Paid {0} for an item that cost {1}. \n ", amountPaid, my2nd);
+            Console.WriteLine("\n \n The Customer Paid {0} for {2} item(s) that cost {1}. \n ", amountPaid, my2nd, count);
 
             ShowCashRegisaterAmount();
 
-            AddLastTransaction(ItemPrice);
+            ;
 
             Console.WriteLine(Line);
-            Console.WriteLine("You sold an Item for : " + ItemPrice);
+            Console.WriteLine("You sold {0} Item(s) for : " + ItemPrice, count);
            
 
             Console.WriteLine("\n \n Press Enter to Preceed");
@@ -308,7 +361,8 @@ namespace _04_Change_Calculator
             {
                 ProgramIntro();
                 getInput();
-                DetermineChange(itemCost, givenAmount);
+                getMoney();
+                DetermineChange(sumOfItemCost, sumOfCutomerMoney);
 
 
             }
