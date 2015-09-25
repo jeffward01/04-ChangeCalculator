@@ -34,7 +34,9 @@ namespace _04_Change_Calculator
         
             public static void displayListItems(List<string> items)
         {
+            Console.Clear();
             int counter = 0;
+            Console.WriteLine("The prices of the items you have sold are: \n \n ");
             foreach (object o in items)
             {
                 counter++;
@@ -42,7 +44,7 @@ namespace _04_Change_Calculator
                 Console.WriteLine(o);
             }
 
-            Console.WriteLine("Press Enter to Proceed");
+            Console.WriteLine("\n \n Press Enter to Proceed");
             Console.ReadLine();
             Restart();
 
@@ -83,7 +85,9 @@ namespace _04_Change_Calculator
         static void Restart()
         {
             string userInput;
-            Console.WriteLine("Would you like to proceed with another transaction? (yes/quit) \n \n or \n \n would you like to save your transactions?");
+            Console.Clear();
+                
+            Console.WriteLine("Would you like to proceed with another transaction? (yes/quit) \n \n or \n \n type save to save your transactions \n \n type print to print your transactions to screen");
             userInput = Console.ReadLine();
             userInput = userInput.ToLower();
             userInput = JeffToolBox.RemoveSpecialCharacters(userInput);
@@ -100,11 +104,11 @@ namespace _04_Change_Calculator
                     Environment.Exit(0);
                     break;
 
-                case "save":
+                case "print":
                     // SaveTransactionsFile(Transactions);
                     displayListItems(Transactions);
                     break;
-                isplaefault:
+                default:
                     Console.Clear();
                     Console.WriteLine("Please check your spelling and type yes, save or quit");
                     Restart();
