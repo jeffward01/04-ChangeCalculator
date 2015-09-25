@@ -44,7 +44,11 @@ namespace _04_Change_Calculator
                 Console.WriteLine(o);
             }
 
-            Console.WriteLine("\n \n Press Enter to Proceed");
+
+
+            Console.WriteLine(" \n \n You have sold : {0} Items \n \n ", items.Count);
+        
+            Console.WriteLine("\n \n  \n Press Enter to Proceed");
             Console.ReadLine();
             Restart();
 
@@ -64,8 +68,31 @@ namespace _04_Change_Calculator
 
             givenAmount = JeffToolBox.ReadCurrency("\n \n Mow much $$ has the customer given you?", true, false);
 
+            
 
-           
+            if (givenAmount >= Decimal.MaxValue || givenAmount <= Decimal.MinValue)
+
+            {
+                Console.Clear();
+                Console.WriteLine(Line);
+                Console.WriteLine("Please enter a realistic number, you hacker...");
+                Console.WriteLine("Press Enter to Proceed");
+                Console.ReadLine();
+                Console.Clear();
+                getInput();
+
+            } else if (itemCost >= Decimal.MaxValue || itemCost <= Decimal.MinValue)
+            {
+                Console.Clear();
+                Console.WriteLine(Line);
+                Console.WriteLine("Please enter a realistic number, you hacker...");
+                Console.WriteLine("Press Enter to Proceed");
+                Console.ReadLine();
+                Console.Clear();
+                getInput();
+
+            }
+
 
 
         }
@@ -86,8 +113,8 @@ namespace _04_Change_Calculator
         {
             string userInput;
             Console.Clear();
-                
-            Console.WriteLine("Would you like to proceed with another transaction? (yes/quit) \n \n or \n \n type save to save your transactions \n \n type print to print your transactions to screen");
+            Console.WriteLine(Line);
+            Console.WriteLine("Would you like to proceed with another transaction? (yes/quit) \n \n or \n \n  type print to print your transactions to screen");
             userInput = Console.ReadLine();
             userInput = userInput.ToLower();
             userInput = JeffToolBox.RemoveSpecialCharacters(userInput);
@@ -95,8 +122,7 @@ namespace _04_Change_Calculator
             switch (userInput)
             {
                 case "yes":
-                    Console.Clear();
-                    ProgramIntro();
+                    Console.Clear();                 
                     getInput();
                     DetermineChange(itemCost, givenAmount);
                     break;
@@ -167,6 +193,11 @@ namespace _04_Change_Calculator
             string yourPenneis = NumOfPennies.ToString("C");
 
             Console.WriteLine(Line);
+
+            string amountPaid = givenAmount.ToString("C");
+            string my2nd = itemCost.ToString("C");
+
+            Console.WriteLine(Line);
             Console.WriteLine("The Customers change is "+customersChange+".  \n \n Please give the customer: \n\n");
 
             Console.WriteLine("# of 50 Dollar Bills : {0}", NumOf50s);
@@ -180,12 +211,18 @@ namespace _04_Change_Calculator
             Console.WriteLine("# of Pennies : {0}", NumOfPennies);
             Console.WriteLine(Line);
             Console.WriteLine("The total change you gave the customer is: " + customersChange);
+            Console.WriteLine("\n \n The Customer Paid {0} for an item that cost {1}. \n ", amountPaid, my2nd);
 
             ShowCashRegisaterAmount();
 
             AddLastTransaction(ItemPrice);
 
             Console.WriteLine(Line);
+            Console.WriteLine("You sold an Item for : " + ItemPrice);
+           
+
+            Console.WriteLine("\n \n Press Enter to Preceed");
+            Console.ReadLine();
             Restart();
             
 
@@ -253,6 +290,10 @@ namespace _04_Change_Calculator
         {
             Console.WriteLine(Line);
             Console.WriteLine("Welcome to Cash Register 1.0");
+            Console.WriteLine(Line);
+            Console.WriteLine("Future Inprovements: \n \n Multiple Item Transaction Feature  || Coming Soon");
+            Console.WriteLine("Currently enter 1 item per transaction.");
+            Console.WriteLine(Line);
             Console.WriteLine("Press Enter to Begin");
             Console.ReadLine();
             Console.Clear();
